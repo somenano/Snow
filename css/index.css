@@ -1,0 +1,73 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to { 
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  background:#000000;
+  font-family: "Courier New", Courier, monospace;
+}
+
+body, html {
+    overflow: hidden;
+}
+
+a:link {
+  color: white;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: white;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+a:active {
+  color: white;
+  text-decoration: none;
+}
+
+.snowflake {
+    position: absolute;
+    top: -50px;
+    background-image: url('../images/snowflake.png');
+    background-size: contain;
+    height: 105;
+    width: 100px;
+    cursor: pointer;
+    animation-name: rotate;
+    animation-duration: 15.0s;
+    animation-iteration-count: infinite;
+    animation-timing-function: : linear;
+}
+
+#title {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: white;
+}
+
+#logo {
+    height: 45px;
+}
+
+#snowflake-example {
+    height: 15px;
+}
+
+#buildings {
+    color: white;
+    position: absolute;
+    bottom:5px;
+    left: 5px;
+}
