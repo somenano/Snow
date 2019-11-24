@@ -122,3 +122,12 @@ function secureMathRandom() {
   // Divide a random UInt32 by the maximum value (2^32 -1) to get a result between 0 and 1
   return window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
 }
+
+function toggle_bg_flakes() {
+    if ($('#bg-flakes-check').is(':checked')) {
+        $('#flakes-enabled').text('enabled');
+    } else {
+        $('#flakes-enabled').text('disabled');
+    }
+    snowStorm.toggleSnow();
+}

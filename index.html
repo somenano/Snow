@@ -13,6 +13,7 @@
     <title>SomeNano Snow</title>
 
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/switch.css">
 
 </head>
 
@@ -20,12 +21,22 @@
 
     <table id="title">
         <tr>
-            <td rowspan="2"><a href="https://www.somenano.com" target="_new"><img src="images/somenano.png" id="logo"></a></td>
+            <td rowspan="2" align="center"><a href="https://www.somenano.com" target="_new"><img src="images/somenano.png" id="logo"></a></td>
             <td>SomeNano Snow</td>
         </tr>
         <tr>
             <td>Every snowflake (<img src="images/snowflake.png" id="snowflake-example">) is a fully confirmed <a href="https://www.nano.org" target="_new">Nano</a> transaction</td>
         </tr>
+        <tr>
+            <td align="center">
+                <label class="switch">
+                    <input type="checkbox" id="bg-flakes-check" onclick="toggle_bg_flakes();" checked>
+                    <span class="slider round"></span>
+                </label>
+            </td>
+            <td>
+                Background snowflakes are <span id="flakes-enabled">enabled</span>
+            </td>
     </table>
 
     <div id="buildings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\<br>
