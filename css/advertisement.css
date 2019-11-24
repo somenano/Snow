@@ -1,0 +1,7 @@
+
+.advertisement {
+  position: absolute;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
