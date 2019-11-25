@@ -7,6 +7,7 @@ socket.on('new_block', handle_new_block);
 function handle_bps(data)
 {
     // console.log(data);
+    $('#tps').text(data.bps.toFixed(2));
 }
 
 function handle_new_block(data)
