@@ -50,7 +50,7 @@ a:active {
     animation-timing-function: : linear;
 }
 
-#title {
+#menu {
     position: absolute;
     top: 5px;
     left: 5px;
@@ -70,4 +70,8 @@ a:active {
     position: absolute;
     bottom:5px;
     left: 5px;
+}
+
+.additional-option {
+  display: none;
 }

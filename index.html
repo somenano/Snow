@@ -20,25 +20,43 @@
 
 <body>
 
-    <table id="title">
-        <tr>
-            <td rowspan="2" align="center"><a href="https://www.somenano.com" target="_new"><img src="images/somenano.png" id="logo"></a></td>
-            <td>SomeNano Snow</td>
-        </tr>
-        <tr>
-            <td>Every snowflake (<img src="images/snowflake.png" id="snowflake-example">) is a fully confirmed <a href="https://www.nano.org" target="_new">Nano</a> transaction</td>
-        </tr>
-        <tr>
-            <td align="center">
-                <label class="switch">
-                    <input type="checkbox" id="bg-flakes-check" onclick="toggle_bg_flakes();" checked>
-                    <span class="slider round"></span>
-                </label>
-            </td>
-            <td>
-                Background snowflakes are <span id="flakes-enabled">enabled</span>
-            </td>
-    </table>
+    <div id="menu">
+        <table>
+            <tr>
+                <td rowspan="2" align="center"><a href="https://www.somenano.com" target="_new"><img src="images/somenano.png" id="logo"></a></td>
+                <td>SomeNano Snow</td>
+            </tr>
+            <tr>
+                <td>Every snowflake (<img src="images/snowflake.png" id="snowflake-example">) is a fully confirmed <a href="https://www.nano.org" target="_new">Nano</a> transaction</td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <label class="switch">
+                        <input type="checkbox" id="bg-flakes-check" onclick="toggle_bg_flakes();" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </td>
+                <td>
+                    Background snowflakes are <span id="flakes-enabled">enabled</span>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><a href="#" onclick="toggle_options();" id="options-link">Show more options...</a></td>
+            </tr>
+            <tr class="additional-option">
+                <td align="center">
+                    <label class="switch">
+                        <input type="checkbox" id="adverts-check" onclick="toggle_adverts();" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </td>
+                <td>
+                    Flyby advertisements are <span id="adverts-enabled">enabled</span>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <div id="buildings"><!-- https://www.asciiart.eu/buildings-and-places/houses -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\&nbsp;&nbsp;//\\<br>

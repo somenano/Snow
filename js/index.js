@@ -131,3 +131,29 @@ function toggle_bg_flakes() {
     }
     snowStorm.toggleSnow();
 }
+
+function toggle_options() {
+    var more = 'Show more options...';
+    var less = 'Show less options...';
+    if ($('#options-link').text() == more) {
+        $('#options-link').text(less);
+        $('.additional-option').css('display', 'table-row');
+    } else {
+        $('#options-link').text(more);
+        $('.additional-option').css('display', 'none');
+    }
+}
+
+function toggle_adverts() {
+    if ($('#adverts-check').is(':checked')) {
+        $('#adverts-enabled').text('enabled');
+        if (typeof advertisements !== 'undefined') {
+            advertisements.start();
+        }
+    } else {
+        $('#adverts-enabled').text('disabled');
+        if (typeof advertisements !== 'undefined') {
+            advertisements.stop();
+        }
+    }
+}
