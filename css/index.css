@@ -96,15 +96,6 @@ a:active {
   display: none;
 }
 
-/*#donate {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 2em;
-}*/
-
 #donate {
   display: none;
   margin: 0;

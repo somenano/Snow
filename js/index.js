@@ -1,15 +1,46 @@
 "use strict"
 
 var socket = io.connect('https://repeater.somenano.com');
-socket.on('bps', handle_bps);
+socket.on('cps', handle_cps);
 socket.on('new_block', handle_new_block);
 
 var donate_address = 'nano_3nahhuscs9ott91ynow4czt96nmwk8ugsw4k6acki36b4n5fcryuuk96mfrm';
 
-function handle_bps(data)
+// 30 second CPS tracker
+var initial_cps = true;
+var cps_tracker = new Array(30).fill(0);
+setInterval(update_cps, 1*1000);
+
+function handle_cps(data)
 {
     // console.log(data);
-    $('#tps').text(data.bps.toFixed(2));
+    
+    if (initial_cps) {
+        // Get initial CPS data from server
+        cps_tracker = data.tracker;
+        initial_cps = false;
+    }
+}
+
+function update_cps()
+{
+    // Every second update the array
+    cps_tracker = cps_tracker.slice(1,);
+    cps_tracker.push(0);
+    show_cps();
+}
+
+function show_cps()
+{
+    // Update GUI
+    var cps = cps_tracker.reduce(function(a, b) { return a + b; }, 0) / cps_tracker.length;
+    var buffer = ' ';
+    if (cps < 10) {
+        buffer = ' --';
+    } else if (cps < 100) {
+        buffer = ' -';
+    }
+    $('#cps').text('' + cps.toFixed(2) + '/sec' + buffer);
 }
 
 function handle_new_block(data)
@@ -54,6 +85,10 @@ function handle_new_block(data)
     data.block = JSON.parse(data.block);
 
     // console.log(data);
+
+    // Update CPS
+    cps_tracker[cps_tracker.length-1] += 1;
+    show_cps();
 
     // Donation?
     if (data.subtype == 'send' && data.block.link_as_account == donate_address) {
