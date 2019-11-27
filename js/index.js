@@ -4,6 +4,8 @@ var socket = io.connect('https://repeater.somenano.com');
 socket.on('bps', handle_bps);
 socket.on('new_block', handle_new_block);
 
+var donate_address = 'nano_3nahhuscs9ott91ynow4czt96nmwk8ugsw4k6acki36b4n5fcryuuk96mfrm';
+
 function handle_bps(data)
 {
     // console.log(data);
@@ -48,7 +50,15 @@ function handle_new_block(data)
     hash: "DB2126797DF5F9E6870BB8F38F07BF9A423BD8623F154F3D4708EC7FC6A6A266"
     subtype: "receive"
     */
+
+    data.block = JSON.parse(data.block);
+
     // console.log(data);
+
+    // Donation?
+    if (data.subtype == 'send' && data.block.link_as_account == donate_address) {
+        donation(data);
+    }
 
     // Create snowflake
     var nanocrawler = 'https://nanocrawler.cc/explorer/block/' + data.hash;
@@ -157,4 +167,53 @@ function toggle_adverts() {
             advertisements.stop();
         }
     }
+}
+
+function toggle_donate_qr() {
+    $('#donation-account').text(donate_address);
+    if ($('#donate').css('display') == 'none') {
+        $('#donate').css('display', 'block');
+    } else {
+        $('#donate').css('display', 'none');
+    }
+}
+
+function donation(data) {
+    var normal_html = '<!-- https://www.asciiart.eu/buildings-and-places/houses -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\&nbsp;&nbsp;//\\\\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\&nbsp;&nbsp;&nbsp;&nbsp;//\\\\///\\\\\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//\\\\&nbsp;&nbsp;///\\////\\\\\\\\&nbsp;&nbsp;/\\&nbsp;&nbsp;//\\\\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;^&nbsp;\\/^&nbsp;^/^&nbsp;&nbsp;^&nbsp;&nbsp;^&nbsp;\\/^&nbsp;\\/&nbsp;&nbsp;^&nbsp;\\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;^\\&nbsp;&nbsp;&nbsp;&nbsp;/\\&nbsp;&nbsp;/&nbsp;^&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;^/&nbsp;^&nbsp;^&nbsp;^&nbsp;&nbsp;&nbsp;^\\&nbsp;^/&nbsp;&nbsp;^^&nbsp;&nbsp;\\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/^&nbsp;&nbsp;&nbsp;\\&nbsp;&nbsp;/&nbsp;^\\/&nbsp;^&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;/&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;\\/&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;^&nbsp;^&nbsp;\\/^&nbsp;&nbsp;^\\&nbsp;^&nbsp;^&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/|\\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;^&nbsp;^&nbsp;&nbsp;^&nbsp;\\&nbsp;^&nbsp;&nbsp;_\\___________________|&nbsp;&nbsp;|_____^&nbsp;^&nbsp;&nbsp;\\&nbsp;&nbsp;&nbsp;/||o\\<br>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;^^&nbsp;&nbsp;^&nbsp;^&nbsp;^\\&nbsp;&nbsp;/______________________________\\&nbsp;^&nbsp;^&nbsp;\\&nbsp;/|o|||\\<br>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;^&nbsp;&nbsp;^^&nbsp;^&nbsp;^&nbsp;&nbsp;/________________________________\\&nbsp;&nbsp;^&nbsp;&nbsp;/|||||o|\\<br>&nbsp;&nbsp;/^&nbsp;^&nbsp;&nbsp;^&nbsp;^^&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;&nbsp;||___|___||||||||||||___|__|||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/||o||||||\\<br>&nbsp;/&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;||___|___||||||||||||___|__|||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;|<br>/&nbsp;^&nbsp;^&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;||||||||||||||||||||||||||||||oooooooooo|&nbsp;|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<br><a href="#" onclick="toggle_donate_qr();">Donate for a colorful show</a> ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo';
+    var special_html = '<!-- https://www.asciiart.eu/buildings-and-places/houses -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\&nbsp;&nbsp;//\\\\&nbsp;&nbsp;<span id="smoke-1" style="color: #999999;">&nbsp;&nbsp;))</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\\&nbsp;&nbsp;&nbsp;&nbsp;//\\\\///\\\\\\&nbsp;&nbsp;<span id="smoke-2" style="color: #999999;">((</span>&nbsp;&nbsp;&nbsp;&nbsp;/\\<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//\\\\&nbsp;&nbsp;///\\////\\\\\\\\<span id="smoke-3" style="color: #999999;">&nbsp;&nbsp;))</span>&nbsp;&nbsp;//\\\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="thanks-1" style="color: #ccffcc;">Thank you for</span><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">/\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;^&nbsp;\\/^&nbsp;^/^&nbsp;&nbsp;^&nbsp;&nbsp;^&nbsp;\\</span><span id="smoke-4" style="color: #999999;">((</span><span style="color: #3366ff;"> \\/&nbsp;&nbsp;^&nbsp;\\</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="thanks-2" style="color: #ccffcc;">the donation!</span><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">/&nbsp;^\\&nbsp;&nbsp;&nbsp;&nbsp;/\\&nbsp;&nbsp;/&nbsp;^&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;^/&nbsp;^&nbsp;^&nbsp;^&nbsp;&nbsp;&nbsp;</span><span id="smoke-5" style="color: #999999;"><span style="color: #3366ff;">^\\</span>))</span><span style="color: #3366ff;">/&nbsp;&nbsp;^^&nbsp;&nbsp;\\</span>&nbsp;&nbsp;<span id="donation-link" style="color: #ccffcc;"></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">/^&nbsp;&nbsp;&nbsp;\\&nbsp;&nbsp;/&nbsp;^\\/&nbsp;^&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;/&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;&nbsp;^ </span><span id="smoke-6" style="color: #999999;">((</span><span style="color: #3366ff;">/&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;\\</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ffff00;"><span class="ascii-star">*</span></span><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">/&nbsp;&nbsp;^&nbsp;^&nbsp;\\/^&nbsp;&nbsp;^\\&nbsp;^&nbsp;^&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;^</span>&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;">____</span>&nbsp;&nbsp;<span style="color: #3366ff;">^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;\\</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #00ff00;">/|\\</span><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">/&nbsp;^&nbsp;^&nbsp;&nbsp;^&nbsp;\\&nbsp;^</span>&nbsp;&nbsp;<span style="color: #ff9900;">_</span><span style="color: #3366ff;">\\</span><span style="color: #ff9900;">___________________</span><span style="color: #ff0000;">|&nbsp;&nbsp;|</span><span style="color: #ff9900;">_____</span><span style="color: #3366ff;">^&nbsp;^&nbsp;&nbsp;\\</span>&nbsp;&nbsp;&nbsp;<span style="color: #00ff00;">/||<span id="ornament-1" style="color: #ff0000;">o</span>\\</span><br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">/&nbsp;^^&nbsp;&nbsp;^&nbsp;^&nbsp;^\\</span>&nbsp;&nbsp;<span style="color: #ff9900;">/______________________________\\</span>&nbsp;<span style="color: #3366ff;">^&nbsp;^&nbsp;\\</span>&nbsp;<span style="color: #00ff00;">/|<span id="ornament-2" style="color: #00ccff;">o</span>|||\\</span><br /> &nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">/&nbsp;&nbsp;^&nbsp;&nbsp;^^&nbsp;^&nbsp;^</span>&nbsp;&nbsp;<span style="color: #ff9900;">/________________________________\\</span>&nbsp;&nbsp;<span style="color: #3366ff;">^</span>&nbsp;&nbsp;<span style="color: #00ff00;">/|||||<span id="ornament-3" style="color: #ffcc00;">o</span>|\\</span><br /> &nbsp;&nbsp;<span style="color: #3366ff;">/^&nbsp;^&nbsp;&nbsp;^&nbsp;^^&nbsp;&nbsp;^</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #993300;">|<span style="color: #ffff99;">|___|___|</span>||||||||||<span style="color: #ffff99;">|___|__|</span>||</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #00ff00;">/||<span id="ornament-4" style="color: #ff6600;">o</span>||||||\\</span><br /> &nbsp;<span style="color: #3366ff;">/&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;&nbsp;^</span>&nbsp;&nbsp;<span style="color: #993300;">|<span style="color: #ffff99;">|___|___|</span>||||||||||<span style="color: #ffff99;">|___|__|</span>||</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #808000;">|&nbsp;|</span><br /> <span style="color: #3366ff;">/&nbsp;^&nbsp;^&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;^&nbsp;&nbsp;^</span>&nbsp;&nbsp;&nbsp;<span style="color: #993300;">||||||||||||||||||||||||||||||</span>oooooooooo<span style="color: #808000;">|&nbsp;|</span>oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<br /><a href="#" onclick="toggle_donate_qr();">Donate for a colorful show</a> ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo';
+    var duration = 30;  // seconds to play animation
+    var frame = 1;      // seconds per frame
+
+    // Start special ascii
+    $('#buildings').html(special_html);
+    var donation_link_html = '(from <a href="https://nanocrawler.cc/explorer/block/' + data.hash + '" target="_new">' + data.account.slice(0, 8) + '...' + data.account.slice(-3, data.account.length) + '</a>)';
+    $('#donation-link').html(donation_link_html);
+    var timer = setInterval(function() {
+        if ($('#ornament-1').css('color') != 'rgb(255, 0, 0)') {
+            $('#buildings').html(special_html);
+            $('#donation-link').html(donation_link_html);
+        } else {
+            $('#ornament-1').css('color', '#ffcc00');
+            $('#ornament-2').css('color', '#ff6600');
+            $('#ornament-3').css('color', '#ff0000');
+            $('#ornament-4').css('color', '#00ccff');
+            $('#smoke-1').html('((&nbsp;&nbsp;');
+            $('#smoke-2').text('))');
+            $('#smoke-3').html('(( <span style="color: #3366ff;">\\</span>');
+            $('#smoke-4').text('))');
+            $('#smoke-5').html('((&nbsp;&nbsp;');
+            $('#smoke-6').text('))');
+            $('#donation-link').html(donation_link_html);
+        }
+    }, frame*1000);
+
+    // Set timer to return to normal
+    setTimeout(function() {
+        clearInterval(timer);
+        $('#buildings').html(normal_html);
+    }, duration*1000);
+}
+
+function go_donate() {
+    window.open('nano:' + donate_address, '_blank');
 }

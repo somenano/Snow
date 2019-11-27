@@ -36,6 +36,26 @@ a:active {
   text-decoration: none;
 }
 
+#donation-link a:link {
+  color: #ccffcc;
+  text-decoration: underline;
+}
+
+#donation-link a:visited {
+  color: #ccffcc;
+  text-decoration: underline;
+}
+
+#donation-link a:hover {
+  color: #ccffcc;
+  text-decoration: none;
+}
+
+#donation-link a:active {
+  color: #ccffcc;
+  text-decoration: none;
+}
+
 .snowflake {
     position: absolute;
     top: -50px;
@@ -74,4 +94,44 @@ a:active {
 
 .additional-option {
   display: none;
+}
+
+/*#donate {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 2em;
+}*/
+
+#donate {
+  display: none;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  max-width: 50%;
+  background-color: black;
+  padding: 10px;
+}
+
+#qrcode {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 300px;
+}
+
+#qrcode-close {
+  font-size: 0.5em;
+}
+
+#donation-account {
+  font-size: 0.5em;
 }
