@@ -14,7 +14,7 @@ setInterval(update_cps, 1*1000);
 function handle_cps(data)
 {
     // console.log(data);
-    
+
     if (initial_cps) {
         // Get initial CPS data from server
         cps_tracker = data.tracker;
@@ -205,7 +205,7 @@ function toggle_adverts() {
 }
 
 function toggle_donate_qr() {
-    $('#donation-account').text(donate_address);
+    $('#donation-account').html('<a href="https://nanocrawler.cc/explorer/account/' + donate_address + '" target="_new">' + donate_address + '</a>');
     if ($('#donate').css('display') == 'none') {
         $('#donate').css('display', 'block');
     } else {
