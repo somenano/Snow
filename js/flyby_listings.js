@@ -15,5 +15,10 @@ var advert_listing = [
     {
         'text': 'NanoCenter.org - Twitch Distribution',
         'url': 'https://nanocenter.org/projects/6402fc40-cc3a-11e9-b383-db34bbe175b8'
+    },
+    {
+        'text': 'NanoPixelWall- choose spot, upload image, share.',
+        'url': 'https://nanopixelwall.com',
+        'expires': 'Thu Jan 01 2020 16:30:26 GMT-0600 (Central Standard Time)'
     }
 ];

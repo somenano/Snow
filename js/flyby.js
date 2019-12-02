@@ -74,7 +74,20 @@ function rnd_int(min, max) {
             console.error('No adverts found! You must include advertisement_listings.js before advertisement.js');
             return {'text': 'No adverts loaded', 'url': '#'};
         }
-        return advert_listing[rnd_int(0, advert_listing.length-1)];
+        var available_listings = [];
+
+        // Select only from valid (not-expired) listings
+        for (var i=0; i<advert_listing.length; i++) {
+            if (advert_listing[i]['expires'] === undefined || Date.now() < Date.parse(advert_listing[i]['expires'])) {
+                available_listings.push(advert_listing[i]);
+            }
+        }
+
+        if (available_listings.length == 0) {
+            return {'text': 'No adverts available', 'url': '#'};
+        }
+
+        return available_listings[rnd_int(0, available_listings.length-1)];
     };
 
     adverts.gen_advert = function(advert_id) {
