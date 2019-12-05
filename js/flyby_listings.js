@@ -20,5 +20,14 @@ var advert_listing = [
         'text': 'NanoPixelWall- choose spot, upload image, share.',
         'url': 'https://nanopixelwall.com',
         'expires': 'Thu Jan 01 2020 16:30:26 GMT-0600 (Central Standard Time)'
+    },
+    {
+        'text': 'Turn on the NanoCenter Xmas lights with Nano now!',
+        'url': 'https://xmas.nanos.cc',
+        'expires': 'Sat Jan 04 2020 18:51:47 GMT-0600 (Central Standard Time)'
     }
 ];
+
+/*
+date = new Date(); date.setDate(date.getDate() + 31); date;
+*/
