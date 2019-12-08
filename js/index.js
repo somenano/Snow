@@ -5,6 +5,7 @@ socket.on('cps', handle_cps);
 socket.on('new_block', handle_new_block);
 
 var donate_address = 'nano_3nahhuscs9ott91ynow4czt96nmwk8ugsw4k6acki36b4n5fcryuuk96mfrm';
+var donate_address = $("meta[name='nano']").attr("content");
 
 // 30 second CPS tracker
 var initial_cps = true;
