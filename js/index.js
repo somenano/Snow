@@ -1,6 +1,7 @@
 "use strict"
 
 var socket = io.connect('https://repeater.somenano.com');
+socket.emit('subscribe_all');
 socket.on('cps', handle_cps);
 socket.on('new_block', handle_new_block);
 
