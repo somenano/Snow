@@ -107,7 +107,7 @@ function rnd_int(min, max) {
         plane += "X*#####*+^^\\_\\-<|&nbsp;";
         plane += cur_advert.text + " |<br>"; // text of advertisement
         plane += "&nbsp;&nbsp;o/\\&nbsp;&nbsp;\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\";
-        plane += "-".repeat(cur_advert.text.length+1) + "\\<br>"; // bottom border of advertisement
+        plane += "-".repeat(cur_advert.text.length+1-4) + "[ad]\\<br>"; // bottom border of advertisement
         plane += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\__\\<br>";
 
         var div = "<div id='" + advert_id + "' class='advertisement' onclick='window.open(\"" + cur_advert.url + "\", \"_blank\")'>" + plane + "</div>";
