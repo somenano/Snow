@@ -9,9 +9,9 @@ var advert_listing = [
         'url': 'https://somenano.com/advertise?ref=snow'
     },
     {
-        'text': 'Trade on Binance ! Lower you fees by 5% on the lowest fees exchange.',
-        'url': 'https://frama.link/thbUCAAu',
-        'expires': 'Sat Jan 02 2021 13:05:16 GMT-0600 (Central Standard Time)'
+        'text': 'Buy Nano on Binance: Click here to register',
+        'url': 'https://accounts.binance.com/en/register?ref=HHOA1FU7',
+        'expires': 'Sun Feb 21 2021 19:29:55 GMT-0600 (Central Standard Time)'
     },
     {
         'text': 'NanoCenter Developer Bounty: Unity3D Plugin',
