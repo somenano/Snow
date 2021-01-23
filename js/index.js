@@ -85,7 +85,6 @@ function handle_block_dump(data)
         setTimeout(function() { handle_new_block(block); }, spread*i);
     }
 
-    console.log('Blocks tracked: '+ Object.keys(tmp).length);
 }
 
 function handle_new_block(data)
