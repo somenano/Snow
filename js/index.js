@@ -1,28 +1,44 @@
 "use strict"
 
-var socket = io.connect('https://repeater.somenano.com');
-socket.emit('subscribe_all');
-socket.on('cps', handle_cps);
-socket.on('new_block', handle_new_block);
-
-var donate_address = 'nano_3nahhuscs9ott91ynow4czt96nmwk8ugsw4k6acki36b4n5fcryuuk96mfrm';
+var donate_address = 'nano_1somenanerzdzdbyr4y6x996qbo764ifxk8beuhphydmwn1agpzkwquqqick';
 var donate_address = $("meta[name='nano']").attr("content");
 
+function new_websocket(url, ready_callback, message_callback) {
+    let socket = new WebSocket(url);
+    socket.onopen = function() {
+        console.log('WebSocket is now open');
+        if (ready_callback !== undefined) ready_callback(this);
+    }
+    socket.onerror = function(e) {
+        console.error('WebSocket error');
+        console.error(e);
+    }
+    socket.onmessage = function(response) {
+        console.log('New message from: '+ url);
+        // console.log(response);
+        if (message_callback !== undefined) message_callback(response);
+    }
+
+    return socket;
+}
+
+new_websocket('wss://node.somenano.com/repeater', function(socket) {
+    // onopen
+    let params = {
+        action: 'subscribe',
+        topic: 'confirmation'
+    }
+    socket.send(JSON.stringify(params));
+}, function(response) {
+    // onmessage
+    let data = JSON.parse(response.data);
+    if (data.topic != 'confirmation') return;
+    handle_block_dump(data);
+});
+
 // 30 second CPS tracker
-var initial_cps = true;
 var cps_tracker = new Array(30).fill(0);
 setInterval(update_cps, 1*1000);
-
-function handle_cps(data)
-{
-    // console.log(data);
-
-    if (initial_cps) {
-        // Get initial CPS data from server
-        cps_tracker = data.tracker;
-        initial_cps = false;
-    }
-}
 
 function update_cps()
 {
@@ -35,14 +51,41 @@ function update_cps()
 function show_cps()
 {
     // Update GUI
-    var cps = cps_tracker.reduce(function(a, b) { return a + b; }, 0) / cps_tracker.length;
-    var buffer = ' ';
+    let cps = cps_tracker.reduce(function(a, b) { return a + b; }, 0) / cps_tracker.length;
+    let buffer = ' ';
     if (cps < 10) {
         buffer = ' --';
     } else if (cps < 100) {
         buffer = ' -';
     }
     $('#cps').text('' + cps.toFixed(2) + '/sec' + buffer);
+}
+
+function handle_block_dump(data)
+{
+    let dtg, cps, blocks, duration = undefined;
+    try {
+        dtg = new Date(data.dtg);
+        cps = data.cps;
+        blocks = data.blocks;
+        duration = data.duration;
+    } catch(e) {
+        console.error('In index.handle_block_dump: error parsing received WebSocket data.');
+        console.error(data);
+        console.error(e);
+        return;
+    }
+
+    console.log(''+ String(dtg.getHours()).padStart(2, '0') +':'+ String(dtg.getMinutes()).padStart(2, '0') +':'+ String(dtg.getSeconds()).padStart(2, '0') + ' - Received '+ blocks.length +' Nano Blocks from the last '+ (duration/1000).toFixed(2) +' second(s). CPS is '+ cps.toFixed(2) +' over the last 30 seconds.');
+
+    // Iterate over each block and "handle" spread over the given duration
+    let spread = duration / blocks.length;
+    for (let i=0 ; i<blocks.length ; i++) {
+        let block = blocks[i];
+        setTimeout(function() { handle_new_block(block); }, spread*i);
+    }
+
+    console.log('Blocks tracked: '+ Object.keys(tmp).length);
 }
 
 function handle_new_block(data)
@@ -84,8 +127,6 @@ function handle_new_block(data)
     subtype: "receive"
     */
 
-    data.block = JSON.parse(data.block);
-
     // console.log(data);
 
     // Update CPS
@@ -93,7 +134,7 @@ function handle_new_block(data)
     show_cps();
 
     // Donation?
-    if (data.subtype == 'send' && data.block.link_as_account == donate_address) {
+    if (data.block.subtype == 'send' && data.block.link_as_account == donate_address) {
         donation(data);
     }
 
