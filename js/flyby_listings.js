@@ -9,21 +9,17 @@ var advert_listing = [
         'url': 'https://somenano.com/advertise?ref=snow'
     },
     {
-        'text': 'Buy Nano on Binance: Click here to register',
-        'url': 'https://accounts.binance.com/en/register?ref=HHOA1FU7',
-        'expires': 'Sun Feb 21 2021 19:29:55 GMT-0600 (Central Standard Time)'
-    },
-    {
-        'text': 'NanoCenter Developer Bounty: Unity3D Plugin',
-        'url': 'https://nanocenter.org/projects/Unity3d',
-    },
-    {
         'text': 'NanoCenter Nano Green Initiative',
         'url': 'https://nanocenter.org/projects/nanogreenintiative',
     },
     {
         'text': 'NanoCenter #NanoTrashTag Bounty',
         'url': 'https://nanocenter.org/projects/TrashTag',
+    },
+    {
+        'text': 'Buy plushies with Nano',
+        'url': 'https://loveplushy.com/blogs/guides/buy-plushies-with-crypto',
+        'expires': 'Wed Mar 30 2022 09:56:03 GMT-0400 (Eastern Daylight Time)'
     }
 ];
 
