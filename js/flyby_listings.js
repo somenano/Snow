@@ -15,11 +15,6 @@ var advert_listing = [
     {
         'text': 'NanoCenter #NanoTrashTag Bounty',
         'url': 'https://nanocenter.org/projects/TrashTag',
-    },
-    {
-        'text': 'Buy plushies with Nano',
-        'url': 'https://loveplushy.com/blogs/guides/buy-plushies-with-crypto',
-        'expires': 'Wed Mar 30 2022 09:56:03 GMT-0400 (Eastern Daylight Time)'
     }
 ];
 

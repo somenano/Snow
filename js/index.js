@@ -138,8 +138,8 @@ function handle_new_block(data)
     }
 
     // Create snowflake
-    var nanocrawler = 'https://nanocrawler.cc/explorer/block/' + data.hash;
-    var flake = '<div id="' + data.hash + '" class="snowflake" onclick="window.open(\'' + nanocrawler + '\', \'_blank\');"></div>';
+    var blockexplorer = 'https://nanexplorer.com/nano/block/' + data.hash;
+    var flake = '<div id="' + data.hash + '" class="snowflake" onclick="window.open(\'' + blockexplorer + '\', \'_blank\');"></div>';
 
     var document_height = $(document).height();
     var document_width = $(window).width();
@@ -247,7 +247,7 @@ function toggle_adverts() {
 }
 
 function toggle_donate_qr() {
-    $('#donation-account').html('<a href="https://nanocrawler.cc/explorer/account/' + donate_address + '" target="_new">' + donate_address + '</a>');
+    $('#donation-account').html('<a href="https://nanexplorer.com/nano/account/' + donate_address + '" target="_new">' + donate_address + '</a>');
     if ($('#donate').css('display') == 'none') {
         $('#donate').css('display', 'block');
     } else {
@@ -263,7 +263,7 @@ function donation(data) {
 
     // Start special ascii
     $('#buildings').html(special_html);
-    var donation_link_html = '(from <a href="https://nanocrawler.cc/explorer/block/' + data.hash + '" target="_new">' + data.account.slice(0, 8) + '...' + data.account.slice(-3, data.account.length) + '</a>)';
+    var donation_link_html = '(from <a href="https://nanexplorer.com/nano/block/' + data.hash + '" target="_new">' + data.account.slice(0, 8) + '...' + data.account.slice(-3, data.account.length) + '</a>)';
     $('#donation-link').html(donation_link_html);
     var timer = setInterval(function() {
         if ($('#ornament-1').css('color') != 'rgb(255, 0, 0)') {
